@@ -49,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/error/**/*",
             "/console/**",
             "/signup",
-            "/register/**"
+            "/register/**",
+            "/salida/**"
     };
 
     @Override
@@ -57,14 +58,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests().
 //                antMatchers("/**").
-                antMatchers(PUBLIC_MATCHERS).
-                permitAll().anyRequest().authenticated();
+                antMatchers(PUBLIC_MATCHERS).permitAll()
+                .antMatchers("/dashboards").hasRole("USER")
+                .anyRequest().authenticated();
 
         http
                 .csrf().disable().cors().disable()
-                .formLogin().failureUrl("/index?error").defaultSuccessUrl("/userFront").loginPage("/index").permitAll()
+                .formLogin().failureUrl("/errorLogin").defaultSuccessUrl("/userFront").loginPage("/index").permitAll()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/salida").deleteCookies("remember-me").permitAll()
                 .and()
                 .rememberMe();
     }

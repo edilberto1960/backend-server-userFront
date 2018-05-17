@@ -60,12 +60,14 @@ public class UserServiceImpl implements UserService{
             for (UserRole ur : userRoles) {
                 roleDao.save(ur.getRole());
             }
-
+            System.out.println("SALVAMOS LOS ROLE DAOS");
             user.getUserRoles().addAll(userRoles);
-
+            /*System.out.println("ADD LOS USER ROLES AL USER");
             user.setPrimaryAccount(accountService.createPrimaryAccount());
+            System.out.println("SALVAMOS PRIMARY ACCOUNT");
             user.setSavingsAccount(accountService.createSavingsAccount());
-
+            System.out.println("SALVAMOS SAVING ACCOUT ");
+            System.out.println("SALVAMOS LOS USER CON PRIMARY ACCOUTN");*/
             localUser = userDao.save(user);
         }
 
